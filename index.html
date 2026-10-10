@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CSC 4320 / 6320 Operating Systems — Exam 1 Study Hub & 2-Sided Cheat Sheet</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Sticky Navigation Header -->
+  <header class="top-header no-print">
+    <div class="header-inner">
+      <div class="brand">
+        <div class="brand-badge">CSC 4320/6320</div>
+        <div class="brand-title">
+          <h1>Operating Systems — Exam 1 Command Center</h1>
+          <p>Dr. Roya Hosseini • Fall 2026 • Exam 1: October 14 (In-Person Paper)</p>
+        </div>
+      </div>
+
+      <nav class="nav-tabs" id="main-nav">
+        <button class="nav-tab active" data-tab="tab-cheatsheet">📄 2-Sided Cheat Sheet</button>
+        <button class="nav-tab" data-tab="tab-exams">📝 5 Practice Exams</button>
+        <button class="nav-tab" data-tab="tab-simulator">⚡ Scheduling &amp; Gantt Lab</button>
+        <button class="nav-tab" data-tab="tab-vault">🔍 Speaker Notes Vault</button>
+        <button class="nav-tab" data-tab="tab-flashcards">🗂️ Flashcards (46)</button>
+        <button class="nav-tab" data-tab="tab-slides">🖥️ All 331 Slides &amp; Notes</button>
+      </nav>
+
+      <div class="header-actions">
+        <a href="pdfs/Exam1_Two_Sided_CheatSheet.pdf" target="_blank" class="btn btn-primary btn-sm" download>⬇️ 2-Page Cheat Sheet PDF</a>
+        <button class="btn btn-sm" id="theme-toggle-btn" title="Toggle Dark/Light Theme">☀️/🌙</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Exam 1 Official Rules & Converted PDF Bar -->
+  <section class="exam-alert-bar no-print">
+    <div class="exam-alert-inner">
+      <div style="display:flex; flex-wrap:wrap; align-items:center; gap:0.5rem;">
+        <span class="pill pill-amber">📅 Exam 1: Oct 14 (In-Person Paper)</span>
+        <span class="pill pill-emerald">✅ 1 Sheet (Front &amp; Back) Cheat Sheet Allowed</span>
+        <span class="pill pill-sky">📌 Ch 3 Slide 21 Marker: "Exam1, end of the session for October 7, and 8"</span>
+        <span class="pill pill-rose">📵 All Electronics Must Be Inside Bag</span>
+      </div>
+      <div class="pdf-bar">
+        <span style="font-size:0.75rem; color:var(--text-muted); font-weight:600;">Converted Slide + Note PDFs:</span>
+        <a href="pdfs/Chapter1_Slides_and_Notes.pdf" target="_blank" class="btn btn-sm">📘 Ch 1 PDF (66 Slides)</a>
+        <a href="pdfs/Chapter2_Slides_and_Notes.pdf" target="_blank" class="btn btn-sm">📗 Ch 2 PDF (151 Slides)</a>
+        <a href="pdfs/Chapter3_Slides_and_Notes.pdf" target="_blank" class="btn btn-sm">📙 Ch 3 PDF (114 Slides)</a>
+      </div>
+    </div>
+  </section>
+
+  <main class="main-container">
+    <!-- ===================================================================
+         TAB 1: 2-SIDED CHEAT SHEET STUDIO (FRONT & BACK)
+         =================================================================== -->
+    <section id="tab-cheatsheet" class="tab-panel active">
+      <div class="toolbar-card no-print">
+        <div>
+          <h2 style="font-size:1.1rem; margin-bottom:0.2rem;">1-Sheet (2-Sided Front &amp; Back) Exam 1 Cheat Sheet Studio</h2>
+          <p style="font-size:0.82rem; color:var(--text-muted);">
+            Covers 100% of Ch 1, Ch 2, and Ch 3 (both up to the Oct 7/8 Slide 21 cutoff and full Ch 3.2–3.8 backup) + all Speaker Notes &amp; worked slide traces. Click any text to customize when Edit Mode is ON!
+          </p>
+        </div>
+        <div style="display:flex; flex-wrap:wrap; gap:0.5rem; align-items:center;">
+          <a href="pdfs/Exam1_Two_Sided_CheatSheet.pdf" target="_blank" class="btn btn-primary" download>📥 Download Typeset 2-Page PDF</a>
+          <button class="btn btn-emerald" id="print-cheatsheet-btn">🖨️ Print 2-Sided Sheet (Browser)</button>
+          <button class="btn btn-amber" id="toggle-edit-cs-btn">✏️ Enable Edit Mode</button>
+          <select id="cs-density-select" class="select-input" title="Font Density">
+            <option value="normal">Density: Standard</option>
+            <option value="compact">Density: Ultra-Compact</option>
+          </select>
+          <button class="btn btn-sm" id="reset-cs-btn">↺ Reset Edits</button>
+        </div>
+      </div>
+
+      <div id="cheat-sheet-printable" class="cheatsheet-wrapper">
+        <!-- ======================== SIDE 1 (FRONT) ======================== -->
+        <div class="cs-sheet-page cs-page-break" id="cs-side-1">
+          <div class="cs-sheet-header">
+            <span>CSC 4320 / 6320 OPERATING SYSTEMS — EXAM 1 CHEAT SHEET (SIDE 1 / FRONT: CHAPTER 1 &amp; CHAPTER 2 PART 1)</span>
+            <span>Dr. Roya Hosseini • Fall 2026 • Slides + Speaker Notes</span>
+          </div>
+
+          <div class="cs-grid-3col">
+            <!-- COLUMN 1 -->
+            <div class="cs-col">
+              <div class="cs-box">
+                <h4>1.1 OS Roles, Views &amp; Control Surface <span class="cs-tag">Ch1 S4–11</span></h4>
+                <ul>
+                  <li><b>Abstraction</b> (<i>Note S6</i>): Hides raw hardware (transistors, disk sectors, RAM chips) &amp; presents clean models: <b>Files</b> (hide disk tracks/sectors), <b>Processes</b> (hide raw CPU via time-sharing), <b>Virtual Memory</b> (private continuous RAM), <b>Sockets</b> (network), <b>Device Drivers</b> (standard I/O), <b>System Calls</b> (safe kernel API).</li>
+                  <li><b>2 Complementary Views (S8)</b>: (1) <b>Extended/Virtual Machine</b> (top-down: abstractions &amp; illusions) &amp; (2) <b>Resource Manager</b> (bottom-up: tracks ownership, schedules, resolves conflicts).</li>
+                  <li><b>Mechanism vs Policy (S8)</b>: <b>Mechanism</b> = <i>"HOW?"</i> capability is built (timer HW, context switch, page table); <b>Policy</b> = <i>"WHICH CHOICE?"</i> is made (which ready process runs next).</li>
+                  <li><b>5 Control Surface Areas (S9)</b>: <b>Process</b> (create, schedule, sync, terminate), <b>Memory</b> (allocate, protect, map, reclaim), <b>Storage</b> (name, organize, persist, retrieve), <b>Devices</b> (control, buffer, cache, abstract), <b>Security</b> (authenticate, authorize, isolate, audit).</li>
+                </ul>
+                <table class="cs-mini-table">
+                  <tr><th>Category (S10)</th><th>Primary Goal</th><th>Defining Behavior / RTOS Notes</th></tr>
+                  <tr><td><b>Batch</b></td><td>Throughput</td><td>Jobs run in non-interactive groups</td></tr>
+                  <tr><td><b>Multiprogramming</b></td><td>CPU Utilization</td><td>Keep several jobs in RAM; switch on I/O wait</td></tr>
+                  <tr><td><b>Time-sharing</b></td><td>Responsiveness</td><td>Rapid CPU switching via short time slices</td></tr>
+                  <tr><td><b>Real-time (RTOS)</b></td><td>Deadline correctness</td><td><i>Note S16</i>: <b>FreeRTOS</b> (AWS IoT), <b>VxWorks</b> (Wind River aerospace/medical), <b>QNX</b> (microkernel RTOS)</td></tr>
+                </table>
+              </div>
+
+              <div class="cs-box">
+                <h4>Multiprogramming Timeline Challenges <span class="cs-tag">Ch1 S12–15</span></h4>
+                <ul>
+                  <li><b>Rule</b>: Single CPU, multiprogramming <i>without</i> time-sharing ($p_1$ starts at $t=0$; $p_2$ starts CPU as soon as $p_1$ enters I/O).</li>
+                  <li><b>Challenge 1 (1 Shared I/O Device, S13)</b>: $p_1(C=10, I/O=50)$, $p_2(C=30, I/O=60)$.
+                    <br>• <i>No Multiprogramming</i>: $(10+50)+(30+60) = \mathbf{150}$.
+                    <br>• <i>With Multiprogramming (1 I/O dev)</i>: $p_1$ CPU $0\to 10$, I/O $10\to 60$. $p_2$ CPU $10\to 40$, <b>waits for single I/O device $40\to 60$</b>, then I/O $60\to 120 \implies \mathbf{120}$.</li>
+                  <li><b>Challenge 2 (2 Separate I/O Devices, S15)</b>: $p_1(C=20, I/O=40)$, $p_2(C=10, I/O=80)$.
+                    <br>• <i>No Multiprogramming</i>: $60+90 = \mathbf{150}$.
+                    <br>• <i>With Multiprogramming (2 I/O devs)</i>: $p_1$ CPU $0\to 20$, I/O₁ $20\to 60$. $p_2$ CPU $20\to 30$, I/O₂ $30\to 110$ (overlaps!) $\implies \max(60,110) = \mathbf{110}$.</li>
+                </ul>
+              </div>
+
+              <div class="cs-box">
+                <h4>1.2 Organization, Storage &amp; Hardware <span class="cs-tag">Ch1 S20–26</span></h4>
+                <ul>
+                  <li><b>OS Comparison Table (S20)</b>:
+                    <br>• <b>Windows 11</b>: File system = <code>NTFS</code> | Kernel = <b>Windows NT Hybrid</b>
+                    <br>• <b>macOS</b>: File system = <code>APFS</code> | Kernel = <b>XNU Hybrid</b> (Mach-influenced)
+                    <br>• <b>Linux</b>: File system = <code>ext4</code>, <code>Btrfs</code>, <code>XFS</code> | Kernel = <b>Monolithic, Modular</b></li>
+                  <li><b>Device Chain (Note S23)</b>: <code>Application → Kernel → Device Driver (OS software) → Device Controller (device hardware) → Physical Device</code>.</li>
+                  <li><b>Instruction Cycle (S24–25)</b>: <code>1. Fetch (at PC) → 2. Decode → 3. Execute → 4. Write Back / Update PC → 5. Check Events (interrupts at instruction boundary)</code>.</li>
+                  <li><b>Memory Hierarchy (S22)</b>: Registers $\to$ L1/L2/L3 Cache $\to$ Main Memory (DRAM) [<b>Volatile</b>: lost on power off] $\to$ SSD / NVMe / Disk / Archive [<b>Non-volatile / persistent</b>].</li>
+                  <li><b>Parallel Hardware (S26)</b>: <b>Shared-Memory</b> (1 address space, loads/stores, locks &amp; cache coherence, multicore) vs. <b>Distributed-Memory</b> (private RAM per node, message passing over interconnect, clusters/cloud).</li>
+                </ul>
+              </div>
+
+              <div class="cs-box">
+                <h4>1.3 Dual-Mode &amp; Privileged Instructions <span class="cs-tag">Ch1 S28–33</span></h4>
+                <ul>
+                  <li><b>Hardware Mode Bit</b>: <code>User Mode (1)</code> = unprivileged subset, restricted memory; <code>Kernel Mode (0)</code> = full hardware &amp; memory access.</li>
+                  <li><b>4 Privileged Instruction Categories (S30)</b>:
+                    <br>1. <b>I/O Control</b> (start/configure devices)
+                    <br>2. <b>Memory Control</b> (modify page tables / protection)
+                    <br>3. <b>Interrupt Control</b> (enable/disable interrupts)
+                    <br>4. <b>Processor Control</b> (halt CPU or switch mode)</li>
+                  <li><b>Illegal Attempt in User Mode</b>: Hardware blocks execution, triggers a <b>synchronous trap/exception</b> into kernel mode, and OS terminates process or returns error.</li>
+                  <li><b>Timer Protection (S31 Note)</b>: Before dispatching user code, kernel sets a <b>hardware timer</b> (privileged). Even in an infinite loop <code>while(1);</code>, timer expires &amp; interrupts CPU back to kernel mode.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- COLUMN 2 -->
+            <div class="cs-col">
+              <div class="cs-box">
+                <h4>1.4–1.5 Interrupts, Traps, Syscalls &amp; strace <span class="cs-tag">Ch1 S35–48</span></h4>
+                <table class="cs-mini-table">
+                  <tr><th>Event Type</th><th>Origin</th><th>Timing</th><th>Examples (S36/39)</th></tr>
+                  <tr><td><b>Interrupt</b></td><td>External hardware</td><td><b>Asynchronous</b></td><td>Timer expiry, disk/SSD completion, network packet, keyboard</td></tr>
+                  <tr><td><b>Exception / Fault</b></td><td>Current instruction</td><td><b>Synchronous</b></td><td>Divide by 0, invalid opcode, page fault, protection fault</td></tr>
+                  <tr><td><b>Trap</b></td><td>Intentional software</td><td><b>Synchronous</b></td><td><code>syscall</code> instruction, debugger breakpoint</td></tr>
+                </table>
+                <ul>
+                  <li><b>5 Interrupt-Handling Steps (S38)</b>: <code>1. Event</code> (HW detects request) $\to$ <code>2. Save</code> (PC &amp; minimal CPU state) $\to$ <code>3. Vector</code> (locate handler via interrupt vector table) $\to$ <code>4. Handle</code> (service cause in kernel) $\to$ <code>5. Return</code> (restore state &amp; resume).</li>
+                  <li><b>6 System Call Categories (S41)</b>: (1) <b>Process control</b> (<code>fork, exec, exit, wait</code>), (2) <b>File mgmt</b> (<code>open, read, write, close</code>), (3) <b>Device mgmt</b> (request, release, ioctl), (4) <b>Info maintenance</b> (time, PID, UID), (5) <b>Communication</b> (<code>pipe, socket, shm</code>), (6) <b>Protection</b> (<code>chmod, chown</code>).</li>
+                  <li><b>API vs Wrapper vs Syscall (S42–45 Note)</b>: App calls C library wrapper (<code>glibc read()</code>) $\to$ puts syscall # in <code>%rax</code> &amp; args in registers $\to$ executes <code>syscall</code> trap $\to$ kernel validates <code>fd</code>/buffer/permissions $\to$ if error, kernel returns negative code and wrapper sets <code>errno</code> &amp; returns <code>-1</code>. (1 API call may invoke 0, 1, or many syscalls).</li>
+                  <li><b>Mode Switch $\ne$ Context Switch (S46)</b>: <b>Mode switch</b> changes privilege (User $\leftrightarrow$ Kernel) for the <i>same</i> process. <b>Context switch</b> changes which process runs (saves $\text{PCB}_A$, loads $\text{PCB}_B$). Every syscall causes a mode switch, NOT necessarily a context switch!</li>
+                  <li><b>System Call Forensics Quiz (strace)</b>: <code>fd 0</code>=stdin, <code>fd 1</code>=stdout, <code>fd 2</code>=stderr, <code>fd 3+</code>=first opened file (<code>openat()=3</code>). If <code>openat()=-1 ENOENT</code>, <code>perror()</code> writes to <code>fd 2</code> (stderr) and exits early (no <code>read</code>/<code>close</code>). <code>strace</code> shows syscall names/args/returns/errno, NOT the CPU mode bit or context switches.</li>
+                </ul>
+              </div>
+
+              <div class="cs-box">
+                <h4>1.6–1.7 Kernel Architectures &amp; Boot Sequence <span class="cs-tag">Ch1 S50–65</span></h4>
+                <table class="cs-mini-table">
+                  <tr><th>Architecture</th><th>Structure &amp; Examples</th><th>Strengths / Risks (S50–56)</th></tr>
+                  <tr><td><b>Monolithic</b></td><td>All core services + drivers in 1 kernel space (Unix, Linux)</td><td>Fast direct function calls; 1 buggy driver can crash entire OS</td></tr>
+                  <tr><td><b>Layered</b></td><td>Strict hierarchy Layer $0\dots N$ (THE)</td><td>Clean modularity; multi-layer crossing overhead</td></tr>
+                  <tr><td><b>Microkernel</b></td><td>Tiny kernel (IPC, sched, basic mem); FS/net/drivers in user space (<b>MINIX 3, QNX</b>)</td><td>High fault isolation &amp; small TCB; IPC message-passing overhead</td></tr>
+                  <tr><td><b>Modular</b></td><td>Monolithic core + dynamic `.ko` modules (<b>Linux</b>)</td><td>Extendable at runtime; <b>NOT isolated</b> (modules run in kernel space!)</td></tr>
+                  <tr><td><b>Hybrid</b></td><td>Pragmatic blend (<b>Windows NT, macOS XNU</b>)</td><td>Keeps hot paths in kernel space with structured boundaries</td></tr>
+                </table>
+                <ul>
+                  <li><b>5 Ordered Boot Stages (S60–65)</b>:
+                    <br><code>1. Firmware (BIOS/UEFI)</code> (motherboard flash; POST &amp; hardware init) $\to$
+                    <br><code>2. Bootloader (GRUB)</code> (copies <b>kernel + initramfs</b> from disk to <b>RAM</b> because CPU can only fetch/execute from memory!) $\to$
+                    <br><code>3. Kernel Init</code> (mem mgmt, CPUs/scheduler, drivers, mounts root <code>/</code>) $\to$
+                    <br><code>4. PID 1 (init / systemd)</code> (starts user-space daemons) $\to$ <code>5. Login / UI</code>.</li>
+                </ul>
+              </div>
+
+              <div class="cs-box">
+                <h4>2.1–2.2 Process Memory, Lifecycle &amp; PCB <span class="cs-tag">Ch2 S5–19</span></h4>
+                <ul>
+                  <li><b>Address Space (Low $\to$ High Virtual Address, S6–7 Note)</b>:
+                    <br>• <b>Text</b> (low): Read-only machine code instructions.
+                    <br>• <b>Data</b>: Global &amp; static variables (<b>Initialized Data</b> + <b>BSS</b> uninitialized/zero-filled globals).
+                    <br>• <b>Heap</b>: Dynamic memory (<code>malloc/new</code>); grows <b>UPWARD ($\uparrow$)</b>.
+                    <br>• <b>Stack</b> (high): Function call frames, local vars, return addresses; grows <b>DOWNWARD ($\downarrow$)</b>.</li>
+                  <li><b>5-State &amp; 7-State Transitions (S12–15)</b>:
+                    <br>• <code>New --(admit)--> Ready --(dispatch)--> Running --(exit)--> Terminated</code>
+                    <br>• <code>Running --(preempt / quantum expired)--> Ready</code>
+                    <br>• <code>Running --(block on I/O or event)--> Waiting/Blocked --(wake/completion)--> Ready</code> (<b>NEVER</b> Waiting $\to$ Running directly!)
+                    <br>• <b>Suspended States (S15)</b>: <code>Waiting --(swap out)--> Blocked Suspended --(I/O finishes!)--> Ready Suspended --(restore to RAM)--> Ready</code>.</li>
+                  <li><b>4 PCB Categories (S16–18)</b>: (1) <b>Identity</b> (PID, PPID, UID), (2) <b>CPU Context</b> (PC, registers, SP, flags), (3) <b>State &amp; Scheduling</b> (state, priority, queue pointers), (4) <b>Memory, I/O &amp; Accounting</b> (page tables, open fds, CPU time). <i>S18 Quote</i>: <b>PC is the timestamp</b> (next instruction); <b>registers hold unfinished details</b>.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- COLUMN 3 -->
+            <div class="cs-col">
+              <div class="cs-box">
+                <h4>2.3 Process Creation, fork/exec/wait, Zombie vs Orphan <span class="cs-tag">Ch2 S21–36</span></h4>
+                <ul>
+                  <li><b>Creation Steps (S21 Note)</b>: Assign new PID $\to$ allocate PCB $\to$ allocate/setup address space $\to$ initialize CPU context &amp; open file table $\to$ link into parent/child hierarchy &amp; insert into <b>Ready queue</b>.</li>
+                  <li><b>Priority Ready List Trace (`create` / `timeout`, S25–26)</b>:
+                    <br>• Prio 2 (highest), 1, 0. Initial: $Q_2=[P_0^*]$. <code>create(n)</code> adds next PCB to tail of $Q_n$ (no preemption). <code>timeout()</code> moves running process to tail of its queue.
+                    <br>• Sequence: <code>1. create(1)</code> ($P_0\to P_1$ in $Q_1$) $\to$ <code>2. create(2)</code> ($P_0\to P_2$ in $Q_2=[P_0^*, P_2]$) $\to$ <code>3. timeout()</code> ($Q_2=[P_2^*, P_0]$; $P_2$ runs!) $\to$ <code>4. create(0)</code> ($P_2\to P_3$ in $Q_0$) $\to$ <code>5. timeout()</code> ($Q_2=[P_0^*, P_2]$; $P_0$ runs!) $\to$ <code>6. create(2)</code> ($P_0\to P_4$ in $Q_2$).
+                    <br>• <b>Result</b>: $P_0$ has <b>3 children</b> ($P_1, P_2, P_4$); $P_2$ has <b>1 child</b> ($P_3$); $P_1, P_3, P_4$ have <b>0 children</b>.</li>
+                  <li><b>`fork()` Return Values (S22/27)</b>: Returns <code>&lt; 0</code> on error; returns <code>0</code> in Child (get real PID via <code>getpid()</code>); returns <code>&gt; 0</code> (child's PID) in Parent. Uses <b>Copy-on-Write (COW)</b> page sharing until written.</li>
+                  <li><b>`execvp()` &amp; `_exit(127)` (S28–29 Note)</b>: <code>execvp()</code> replaces code/data/heap/stack in-place keeping the <b>SAME PID</b> (never returns on success). If it fails, child calls <code>_exit(127)</code> (avoids flushing duplicate parent stdio buffers; 127 = command not found). Parent collects status via <code>waitpid(pid, &amp;status, 0)</code> + <code>WIFEXITED(status)</code> + <code>WEXITSTATUS(status)</code>.</li>
+                  <li><b>Zombie vs. Orphan (S33)</b>:
+                    <br>• <b>Zombie</b>: <b>Child is dead</b>, parent hasn't called <code>wait()</code> yet; keeps PCB/process-table slot for exit status.
+                    <br>• <b>Orphan</b>: <b>Parent died first</b> while child is still alive; kernel reparents child to <code>init/systemd</code> (<b>PID 1</b>) to reap it later.</li>
+                  <li><b>Termination Cascade (`destroy(p)`, S34–36)</b>: Recursively kills all descendants in subtree, frees memory/files/locks, removes from queues (or leaves zombie until parent waits).</li>
+                </ul>
+              </div>
+
+              <div class="cs-box">
+                <h4>2.4 Interprocess Communication (IPC) <span class="cs-tag">Ch2 S38–43</span></h4>
+                <table class="cs-mini-table">
+                  <tr><th>Model / Mechanism</th><th>Key Properties &amp; Trade-Offs</th></tr>
+                  <tr><td><b>Shared Memory</b></td><td>Fast memory-speed reads/writes after setup; requires explicit synchronization (mutex/semaphore)</td></tr>
+                  <tr><td><b>Message Passing</b></td><td>Kernel mediates send/receive; stronger isolation &amp; works across nodes; syscall/copy overhead</td></tr>
+                  <tr><td><b>Unnamed Pipe</b></td><td><code>pipe(fd)</code>: <code>fd[0]</code>=read, <code>fd[1]</code>=write; unidirectional byte stream for <b>related</b> processes (close unused ends!)</td></tr>
+                  <tr><td><b>Named Pipe (FIFO)</b></td><td>Filesystem path entry; allows <b>unrelated local processes</b> to communicate</td></tr>
+                  <tr><td><b>Signal</b></td><td>Lightweight async notification (e.g. <code>SIGINT, SIGKILL, SIGCHLD</code>); tiny payload</td></tr>
+                  <tr><td><b>Socket</b></td><td>Bidirectional communication endpoint (local UNIX domain or TCP/UDP network)</td></tr>
+                </table>
+              </div>
+
+              <div class="cs-box">
+                <h4>2.5–2.6 Threads, Mapping Models &amp; Server Math <span class="cs-tag">Ch2 S45–66</span></h4>
+                <ul>
+                  <li><b>Shared in Process vs. Private per Thread (TCB) (S47)</b>:
+                    <br>• <b>Shared</b>: Text (code), Data/BSS (globals), Heap, Open files, Signals/WD.
+                    <br>• <b>Private per Thread (TCB)</b>: Thread ID, <b>Program Counter (PC)</b>, <b>CPU Registers</b>, <b>Stack</b>, scheduling state/priority.</li>
+                  <li><b>Server Caching Workout (S53–54)</b>: Arrivals every $25\text{ ms}$. Cache hit ($80\%$) = $15\text{ ms}$ CPU. Cache miss ($20\%$) = $15\text{ ms}$ CPU + $75\text{ ms}$ disk ($90\text{ ms}$ total). Thread creation cost = $10\text{ ms}$ CPU.
+                    <br>• <b>Single-threaded avg time</b>: $0.8(15) + 0.2(15+75) = 12 + 18 = \mathbf{30\text{ ms}} &gt; 25\text{ ms}$ (<b>cannot keep up!</b>).
+                    <br>• <b>Multi-threaded avg CPU time</b>: $10\text{ ms (create)} + 15\text{ ms (work)} = \mathbf{25\text{ ms}}$ (overlaps disk wait $\implies$ <b>keeps up!</b>).</li>
+                  <li><b>4 Thread Mapping Models (S56–59)</b>:
+                    <br>• <b>Many-to-One (User-Level)</b>: Fast user-space switches; <b>1 blocking syscall blocks entire process</b>; max <b>1 core</b> (no parallelism).
+                    <br>• <b>One-to-One (Kernel-Level)</b>: 1 user $\to$ 1 kernel thread (Linux/Windows/macOS); true multicore parallelism; blocking syscall doesn't block peers; higher creation/switch cost.
+                    <br>• <b>Many-to-Many ($M:N$)</b>: $M$ user threads multiplexed on $N$ kernel threads.
+                    <br>• <b>Two-Level</b>: $M:N$ pool + ability to bind critical user thread 1:1.</li>
+                  <li><b>Linux `clone()` Task Model (S60 Note)</b>: Linux treats processes &amp; threads as <code>tasks</code> (`task_struct`). <code>fork()</code> = minimal sharing; <code>pthread_create()</code> calls <code>clone(CLONE_VM | CLONE_FILES | CLONE_THREAD)</code>.</li>
+                  <li><b>Multithreaded `fork()` &amp; `exec()` (S63)</b>: If child calls <code>exec()</code> right away, duplicate <b>only calling thread</b> (all other threads vanish at <code>exec()</code>).</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ======================== SIDE 2 (BACK) ======================== -->
+        <div class="cs-sheet-page" id="cs-side-2">
+          <div class="cs-sheet-header">
+            <span>CSC 4320 / 6320 OPERATING SYSTEMS — EXAM 1 CHEAT SHEET (SIDE 2 / BACK: CHAPTER 2 SCHEDULING &amp; CHAPTER 3 CONCURRENCY)</span>
+            <span>Dr. Roya Hosseini • Fall 2026 • Slides + Speaker Notes</span>
+          </div>
+
+          <div class="cs-grid-3col">
+            <!-- COLUMN 1 -->
+            <div class="cs-col">
+              <div class="cs-box">
+                <h4>2.7–2.9 Context Switching, TLB &amp; Schedulers <span class="cs-tag">Ch2 S68–98</span></h4>
+                <ul>
+                  <li><b>Context-Switch PCB Rule (S70–75 Note)</b>: While process $p$ is actively running on the CPU, $p$'s live state is in the <b>CPU registers</b> and $p$'s <b>PCB copy is out-of-date</b>! Only when an interrupt/trap enters the OS is $p$'s current CPU state saved into $p$'s PCB.</li>
+                  <li><b>Who Can Trigger a Switch for Running $p$? (S77)</b>:
+                    <br>• Process $p$ itself (blocks/exits) = <b>TRUE</b> | The OS (preemption) = <b>TRUE</b> | Another user process $q$ directly = <b>FALSE</b>!</li>
+                  <li><b>Direct vs Indirect Switch Cost &amp; TLB (S82–83 Note)</b>:
+                    <br>• <b>Direct cost</b>: Saving/restoring registers, scheduler/dispatcher execution, updating memory pointers.
+                    <br>• <b>Indirect cost</b>: Cold L1/L2/L3 caches, pipeline flush, <b>TLB flush</b>.
+                    <br>• <b>TLB (Translation Lookaside Buffer)</b>: Hardware cache in MMU storing <code>VPN → PFN</code> translations so virtual memory access avoids an extra RAM page-table lookup.</li>
+                  <li><b>Schedulers &amp; Dispatcher (S88)</b>:
+                    <br>• <b>Long-Term</b>: Admits jobs from Job Queue $\to$ Ready (low freq; controls degree of multiprogramming).
+                    <br>• <b>Medium-Term</b>: Swaps processes out/in (Blocked/Ready Suspended).
+                    <br>• <b>Short-Term (CPU)</b>: Picks next Ready process for CPU (very high freq).
+                    <br>• <b>Dispatcher</b>: Switches context, switches to user mode, jumps to PC (time taken = <b>dispatch latency</b>).</li>
+                  <li><b>Non-Preemptive Decision Points (S93)</b>: Decisions occur <b>ONLY</b> when running process <b>blocks</b> or <b>terminates</b> (<b>NOT</b> on new arrival in RL or wake from blocked $\to$ ready!).</li>
+                  <li><b>I/O-Bound vs CPU-Bound (S94)</b>: Interactive OSes give <b>higher priority to I/O-bound</b> processes (short CPU bursts). <b>CPU burst time</b> = CPU execution time <i>only</i> (excludes I/O wait).</li>
+                  <li><b>Core Scheduling Formulas (S96–98)</b>:
+                    <br>• $\text{Turnaround Time (TAT)} = \text{Completion Time (CT)} - \text{Arrival Time (AT)}$
+                    <br>• $\text{Waiting Time (WT)} = \text{TAT} - \text{Burst Time (BT)}$ (time in Ready queue)
+                    <br>• $\text{Response Time (RT)} = \text{First CPU Start Time} - \text{AT}$
+                    <br>• $\text{CPU Utilization} = \frac{\text{CPU Busy Time}}{\text{Total Elapsed Time}} \times 100\%$
+                    <br>• $\text{Throughput} = \frac{\text{Completed Processes}}{\text{Total Elapsed Time}}$</li>
+                </ul>
+              </div>
+
+              <div class="cs-box">
+                <h4>2.10 Scheduling Algorithms &amp; Slide Workouts <span class="cs-tag">Ch2 S100–149</span></h4>
+                <ul>
+                  <li><b>Arbitration Rule (S106)</b>: Breaks ties among equal priorities (FIFO, SJF, lowest PID, RR); <b>does NOT change priority values</b>.</li>
+                  <li><b>FCFS (S107–108)</b>: Non-preemptive FIFO. Suffers from <b>Convoy Effect</b> (short I/O-bound jobs stuck behind 1 long CPU-bound job).
+                    <br>• <i>Slide 108</i>: $p_1(0,24), p_2(0,3), p_3(0,3) \implies$ Gantt: $p_1(0\text{–}24), p_2(24\text{–}27), p_3(27\text{–}30)$. $\text{Avg TAT} = \frac{24+27+30}{3} = \mathbf{27}$, $\text{Avg WT} = \frac{0+24+27}{3} = \mathbf{17}$.</li>
+                  <li><b>Non-Preemptive Priority (S109–110, Lower # = Higher Prio)</b>:
+                    <br>• $p_1(0,10,\text{prio }3), p_2(2,6,\text{prio }1), p_3(5,2,\text{prio }2)$. $p_1$ runs $0\text{–}10$; at $t=10$, $p_2(\text{prio }1)$ beats $p_3(\text{prio }2) \implies p_2(10\text{–}16), p_3(16\text{–}18)$. $\text{CT}=[10,16,18], \text{TAT}=[10,14,13] (\text{Avg }\mathbf{12.33}), \text{WT}=[0,8,11] (\text{Avg }\mathbf{6.33})$.</li>
+                  <li><b>SJF (Non-Preemptive, S114–115)</b>: Optimal avg WT for non-preemptive.
+                    <br>• $p_1(0,6), p_2(2,8), p_3(4,7), p_4(5,3) \implies p_1(0\text{–}6) \to p_4(6\text{–}9) \to p_3(9\text{–}16) \to p_2(16\text{–}24)$. $\text{TAT}=[6,22,12,4] (\text{Avg }\mathbf{11.0})$, $\text{WT}=[0,14,5,1] (\text{Avg }\mathbf{5.0})$.</li>
+                  <li><b>SRTF (Preemptive SJF, S117–119)</b>: Preempts if new arrival's burst $&lt;$ remaining time!
+                    <br>• $p_1(0,8), p_2(1,4), p_3(2,9), p_4(3,5) \implies p_1(0\text{–}1) \to p_2(1\text{–}5) \to p_4(5\text{–}10) \to p_1(10\text{–}17) \to p_3(17\text{–}26)$. $\text{CT}=[17,5,26,10]$, $\text{TAT}=[17,4,24,7] (\text{Avg }\mathbf{13.0})$, $\text{WT}=[9,0,15,2] (\text{Avg }\mathbf{6.5})$.</li>
+                  <li><b>Burst Prediction (Exponential Averaging, S113 Note)</b>:
+                    <br>$$\tau_{n+1} = \alpha\, t_n + (1 - \alpha)\,\tau_n \quad (0 \le \alpha \le 1)$$</li>
+                  <li><b>Priority Starvation &amp; Aging (S121)</b>: Low-priority jobs can starve indefinitely; <b>Aging</b> gradually increases priority as wait time grows.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- COLUMN 2 -->
+            <div class="cs-col">
+              <div class="cs-box">
+                <h4>Round Robin (RR), MLFQ &amp; Modern Schedulers <span class="cs-tag">Ch2 S122–149</span></h4>
+                <ul>
+                  <li><b>RR Queue Rule (S124–126)</b>: New arrivals at or before $t$ join Ready Queue <b>BEFORE</b> the preempted process at time $t$ is re-queued!
+                    <br>• <i>Slide 126 Workout ($Q=4\text{ ms}$)</i>: $P_1(0,10), P_2(1,5), P_3(2,8)$.
+                    <br>• Gantt: $P_1(0\text{–}4) \to P_2(4\text{–}8) \to P_3(8\text{–}12) \to P_1(12\text{–}16) \to P_2(16\text{–}17) \to P_3(17\text{–}21) \to P_1(21\text{–}23)$.
+                    <br>• $\text{CT}: P_1=23, P_2=17, P_3=21$. $\text{TAT}=[23,16,19] (\text{Avg }\mathbf{19.33})$. $\text{WT}=[13,11,11] (\text{Avg }\mathbf{11.67})$.</li>
+                  <li><b>RR Context-Switch Overhead Formulas (S128–129)</b>: Burst $=T$, Quantum $=Q$, Switch cost $=S$:
+                    <br>• Case 1 ($T &lt; Q$, finishes before quantum): $\text{Wasted Fraction} = \mathbf{\frac{S}{T + S}}$.
+                    <br>• Case 2 ($T \gg Q$, many quanta per burst): $\text{Wasted Fraction} = \mathbf{\frac{S}{Q + S}}$.
+                    <br>• As $Q \to \infty$, RR degenerates into <b>FCFS</b>; as $Q \to 0$, overhead $\to 100\%$.</li>
+                  <li><b>3-Queue MLFQ Workout (S135–138)</b>: $Q_0(\text{RR }8), Q_1(\text{RR }16), Q_2(\text{FCFS})$. $P_1(0,30), P_2(2,6), P_3(10,12)$.
+                    <br>• $0\text{–}8: P_1(Q_0\to Q_1,\text{rem }22)$ | $8\text{–}14: P_2(Q_0,\text{finishes at }14!)$ | $14\text{–}22: P_3(Q_0\to Q_1,\text{rem }4)$ | $22\text{–}38: P_1(Q_1\to Q_2,\text{rem }6)$ | $38\text{–}42: P_3(Q_1,\text{finishes at }42!)$ | $42\text{–}48: P_1(Q_2,\text{finishes at }48!)$.</li>
+                  <li><b>4-Queue MLFQ Workout (S139–141)</b>: $Q_0(\text{RR }1), Q_1(\text{RR }2), Q_2(\text{RR }4), Q_3(\text{FCFS})$. $P_1(0,8), P_2(0,3), P_3(1,5)$.
+                    <br>• $0\text{–}1: P_1(Q_0\to Q_1,\text{rem }7)$ | $1\text{–}2: P_2(Q_0\to Q_1,\text{rem }2)$ | $2\text{–}3: P_3(Q_0\to Q_1,\text{rem }4)$ | $3\text{–}5: P_1(Q_1\to Q_2,\text{rem }5)$ | $5\text{–}7: P_2(Q_1,\text{done at }\mathbf{7}!)$ | $7\text{–}9: P_3(Q_1\to Q_2,\text{rem }2)$ | $9\text{–}13: P_1(Q_2\to Q_3,\text{rem }1)$ | $13\text{–}15: P_3(Q_2,\text{done at }\mathbf{15}!)$ | $15\text{–}16: P_1(Q_3,\text{done at }\mathbf{16}!)$.</li>
+                  <li><b>Multiprocessor &amp; Modern Schedulers (S144–149)</b>:
+                    <br>• <b>Affinity</b>: Soft (preferred CPU) vs. Hard (restricted CPU set) for warm caches.
+                    <br>• <b>NUMA</b>: Local node RAM is faster than remote node RAM.
+                    <br>• <b>Real-Time</b>: <b>RMS</b> (fixed prio: shorter period $\to$ higher prio) vs. <b>EDF</b> (dynamic: nearest deadline first, up to $100\%$ CPU).
+                    <br>• <b>Linux CFS vs EEVDF (S149)</b>: CFS picks smallest <code>vruntime</code>; <b>EEVDF</b> (Linux 6.6+) checks eligibility ($\text{lag} \ge 0$) &amp; picks earliest virtual deadline.</li>
+                </ul>
+              </div>
+
+              <div class="cs-box">
+                <h4>3.1 Concurrency Foundations (★ Oct 7/8 Exam 1 Cutoff ★) <span class="cs-tag">Ch3 S1–21</span></h4>
+                <ul>
+                  <li><b>Slide 21 Official Marker</b>: <i>"Exam1, end of the session for October 7, and 8"</i>.</li>
+                  <li><b>Concurrent vs. Parallel (S6–7, 14–15)</b>:
+                    <br>• <b>Concurrency</b> (Structuring/Progress): Multiple tasks make progress over <b>overlapping time intervals</b> (works on <b>1 core</b> via time-sliced interleaving, or on multiple cores).
+                    <br>• <b>Parallelism</b> (Execution): Multiple instructions execute at the <b>exact same instant</b> (requires $\ge 2$ cores or independent HW units like CPU + DMA I/O).</li>
+                  <li><b>1-Core I/O + Compute Overlap Workout (S8 &amp; S17)</b>:
+                    <br>• Task A: $2\text{ ms I/O wait} + 1\text{ ms CPU}$. Task B: $2\text{ ms CPU}$.
+                    <br>• <b>Sequential (Wait-then-Run)</b>: $2 + 1 + 2 = \mathbf{5\text{ ms}}$ (CPU utilization $= 3/5 = \mathbf{60\%}$).
+                    <br>• <b>Concurrent (Overlap B's CPU during A's I/O)</b>: $t=0\text{–}2$: A waits I/O while B runs $2\text{ ms}$ CPU; $t=2\text{–}3$: A runs $1\text{ ms}$ CPU $\implies \mathbf{3\text{ ms}}$ total! (CPU utilization $= 3/3 = \mathbf{100\%}$).</li>
+                  <li><b>Stack Variable Pointer Warning (S9–10 Note)</b>: A thread's stack is private by convention, <b>NOT hardware-isolated</b> from other threads in the same process! If Thread A passes <code>&amp;x</code> (address of its stack variable) to Thread B, Thread B CAN read/modify A's <code>x</code>!</li>
+                  <li><b>Shared Counter Lost-Update Trace (S11, 18–20)</b>:
+                    <br>• <code>counter++</code> compiles to 3 machine steps: <code>r = counter; r = r + 1; counter = r;</code> (where <code>counter</code> is shared, but <code>rA</code> and <code>rB</code> are private registers).
+                    <br>• If <code>counter = 10</code> and both A and B read <code>10</code> before either stores back, both write <code>11</code> $\implies$ final value is <b>11 instead of 12</b> (<b>Lost Update</b>)!
+                    <br>• Even with a mutex, <b>which thread enters first is nondeterministic</b> (A then B, or B then A), but the final value is deterministically <b>12</b>.</li>
+                  <li><b>4 Core Concurrency Hazards (S12–13)</b>: (1) <b>Race Condition / Data Corruption</b>, (2) <b>Deadlock</b> (cycle of mutual waiting), (3) <b>Starvation</b> (runnable task repeatedly denied progress), (4) <b>Lost Wakeup</b> (check condition &amp; sleep not atomic).</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- COLUMN 3 -->
+            <div class="cs-col">
+              <div class="cs-box">
+                <h4>3.2–3.4 Critical Sections, Peterson's &amp; Atomics <span class="cs-tag">Ch3 S23–57</span></h4>
+                <ul>
+                  <li><b>Data Race vs. Race Condition (S23 &amp; 31)</b>:
+                    <br>• <b>Data Race</b>: Unsynchronized concurrent accesses to 1 memory location by $\ge 2$ threads where $\ge 1$ writes (undefined behavior in C/C++).
+                    <br>• <b>Race Condition</b>: Correctness depends on timing/interleaving (can happen even WITH atomic operations, e.g., check-then-act <code>if (seats &gt; 0) seats--;</code>).</li>
+                  <li><b>3 Critical-Section Requirements (S27–28)</b>:
+                    <br>1. <b>Mutual Exclusion (Safety)</b>: At most 1 thread inside CS at any time.
+                    <br>2. <b>Progress (Liveness)</b>: If CS is empty, decision among entering threads cannot be postponed indefinitely; threads in Remainder Section cannot block entry.
+                    <br>3. <b>Bounded Waiting (Liveness)</b>: Bound on how many times others can overtake a waiting thread.</li>
+                  <li><b>Broken Attempts (S34–35)</b>:
+                    <br>• <b>Strict Alternation (<code>turn</code>)</b>: Satisfies Mutual Exclusion, <b>FAILS Progress</b> (if $T_1$ is in Remainder, $T_0$ cannot enter twice in a row).
+                    <br>• <b>Flags Only (<code>flag[i]=true</code>)</b>: Both set flags true &amp; wait forever $\implies$ <b>Deadlock</b> (fails Progress).</li>
+                  <li><b>Peterson's Algorithm (S37–41)</b>:
+                    <br><code>flag[i] = true; turn = j; while (flag[j] &amp;&amp; turn == j); /* CS */ flag[i] = false;</code>
+                    <br>• <b>Contention Trace (S38)</b>: If $T_0$ sets <code>turn=1</code> then $T_1$ sets <code>turn=0</code>, the <b>last write (`turn=0`) wins</b> $\implies T_0$ sees <code>turn != 1</code> and <b>$T_0$ enters CS first</b>! Max overtakes $= \mathbf{1}$.
+                    <br>• <b>Modern CPU Caveat (S40–41)</b>: Store buffers can reorder <code>flag[i]=true</code> after reading <code>flag[j]</code>; requires a <b>memory fence/barrier</b>! Also note: C <code>volatile</code> prevents compiler caching, <b>NOT</b> hardware races or reordering (S55).</li>
+                  <li><b>Hardware Atomics (S47–53)</b>:
+                    <br>• <code>test_and_set(&amp;L)</code>: Sets <code>L=true</code>, returns old value. Lock: <code>while(test_and_set(&amp;L));</code>.
+                    <br>• <code>compare_and_swap(&amp;x, expected, desired)</code>: Updates <code>x=desired</code> iff <code>x==expected</code>.
+                    <br>• <b>Spinlock vs Sleeping Mutex (S51–52)</b>: Spinlocks never sleep on 1 core (waste full quantum) and lack bounded waiting; use spinlocks only for <b>very short multicore kernel holds</b>.</li>
+                </ul>
+              </div>
+
+              <div class="cs-box">
+                <h4>3.5–3.8 Semaphores, Monitors, Classics &amp; Amdahl <span class="cs-tag">Ch3 S59–111</span></h4>
+                <ul>
+                  <li><b>Mutex vs. Binary Semaphore vs. Counting Semaphore (S60–67)</b>:
+                    <br>• <b>Mutex</b>: Has <b>strict ownership</b> (only locker can unlock).
+                    <br>• <b>Binary Semaphore (0/1)</b>: No ownership (Thread A can <code>signal</code> to wake Thread B).
+                    <br>• <b>Counting Semaphore ($N$)</b>: Tracks $N$ available resource instances.
+                    <br>• <b>Initial Values (S67)</b>: Mutual exclusion = <code>1</code>; Pool of $K$ resources = <code>K</code>; Wait for event ($A \prec B$) = <code>0</code>.</li>
+                  <li><b>Monitors &amp; Condition Variables (S69–74)</b>:
+                    <br>• <code>wait(cv, m)</code> atomically <b>releases mutex `m` and sleeps</b>, then <b>reacquires `m`</b> before returning. Signals with no waiters are <b>not stored</b>!
+                    <br>• <b>Mesa vs. Hoare (S74)</b>: In <b>Mesa monitors</b> (POSIX/Java), signaler keeps running and another thread can barge in &amp; change state before awakened thread runs $\implies$ <b>ALWAYS use `while (!predicate) wait(cv, m);` (NEVER `if`)</b>! (Hoare hands off lock immediately).</li>
+                  <li><b>3 Classical Synchronization Problems (S80–92)</b>:
+                    <br>• <b>Bounded Buffer</b>: <code>empty=N, full=0, mutex=1</code>. Producer: <code>wait(empty) → wait(mutex) → put → signal(mutex) → signal(full)</code>. (Reversing <code>wait(mutex)</code> before <code>wait(empty)</code> causes <b>DEADLOCK</b>!).
+                    <br>• <b>Readers–Writers</b>: 1st reader (<code>readers==1</code>) calls <code>wait(room)</code>; last reader (<code>readers==0</code>) calls <code>signal(room)</code>. (Reader-preference can starve writers).
+                    <br>• <b>Dining Philosophers</b>: All 5 grab left fork $\implies$ deadlock! Fix via (1) <b>Global Fork Ordering</b> (last philosopher picks higher/lower index first), (2) max <b>4 at table</b>, or (3) monitor.</li>
+                  <li><b>Priority Inversion &amp; Amdahl's Law (S101–105)</b>:
+                    <br>• <b>Priority Inversion</b>: Medium task $M$ preempts Low task $L$ while $L$ holds lock needed by High task $H$. Fix: <b>Priority Inheritance Protocol</b> ($L$ inherits $H$'s priority until unlock).
+                    <br>• <b>Amdahl's Law (S105)</b>: Serial fraction $s$, cores $p$:
+                    $$\text{Speedup}(p) \le \frac{1}{s + \frac{1 - s}{p}}, \qquad \lim_{p\to\infty}\text{Speedup} = \frac{1}{s}$$
+                    <i>Slide 105 Example ($s=0.20, p=4$)</i>: $\frac{1}{0.20 + 0.80/4} = \frac{1}{0.40} = \mathbf{2.5\times}$ (max at $\infty$ cores $= \mathbf{5\times}$).</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         TAB 2: 5 FULL-LENGTH PRACTICE EXAMS
+         =================================================================== -->
+    <section id="tab-exams" class="tab-panel no-print">
+      <div class="toolbar-card">
+        <div>
+          <h2 style="font-size:1.1rem; margin-bottom:0.2rem;">5 Full-Length Practice Exams (Paper-Exam Format + Auto-Grader)</h2>
+          <p style="font-size:0.82rem; color:var(--text-muted);">
+            Built directly from Dr. Hosseini's Ch 1, Ch 2, and Ch 3 slides, speaker notes, Homework 1, and System Call Forensics Quiz. Switch between <b>Study Mode</b> (instant answers + slide citations) and <b>Timed Exam Mode</b> (75-minute paper simulation).
+          </p>
+        </div>
+        <div style="display:flex; flex-wrap:wrap; gap:0.6rem; align-items:center;">
+          <div class="timer-box" id="exam-timer-display">75:00</div>
+          <button class="btn btn-sm" id="timer-start-btn">▶️ Start Timer</button>
+          <button class="btn btn-sm" id="timer-reset-btn">↺ Reset Timer</button>
+          <select id="exam-mode-select" class="select-input">
+            <option value="study">Mode: Study (Instant Explanations)</option>
+            <option value="timed">Mode: Exam Simulation (Grade at End)</option>
+          </select>
+          <button class="btn btn-primary" id="grade-exam-btn">✅ Grade Current Exam</button>
+        </div>
+      </div>
+
+      <div class="exam-layout">
+        <aside>
+          <div class="card" style="padding:1rem;">
+            <h3 style="font-size:0.92rem; margin-bottom:0.65rem;">Select Practice Exam</h3>
+            <div class="exam-selector-list" id="exam-selector-list"></div>
+            <div id="exam-score-summary" style="margin-top:1rem; padding-top:0.85rem; border-top:1px solid var(--border-subtle); font-size:0.85rem;"></div>
+          </div>
+        </aside>
+
+        <div id="exam-questions-container"></div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         TAB 3: INTERACTIVE CPU SCHEDULING & GANTT LAB
+         =================================================================== -->
+    <section id="tab-simulator" class="tab-panel no-print">
+      <div class="toolbar-card">
+        <div>
+          <h2 style="font-size:1.1rem; margin-bottom:0.2rem;">Interactive CPU Scheduling &amp; Gantt Chart Simulator</h2>
+          <p style="font-size:0.82rem; color:var(--text-muted);">
+            Test any dataset or load Dr. Hosseini's exact Chapter 2 lecture workouts (FCFS, Non-Preemptive SJF, Preemptive SRTF, Priority, Round Robin, 3-Queue MLFQ, and 4-Queue MLFQ) with step-by-step Gantt charts and CT / TAT / WT / RT tables.
+          </p>
+        </div>
+        <div style="display:flex; flex-wrap:wrap; gap:0.5rem; align-items:center;">
+          <select id="sim-preset-select" class="select-input">
+            <option value="rr_s125">Preset: Slide 125–126 Round Robin (Q = 4 ms)</option>
+            <option value="mlfq4_s139">Preset: Slide 139–141 4-Queue MLFQ (Q0=1, Q1=2, Q2=4, Q3=FCFS)</option>
+            <option value="mlfq3_s135">Preset: Slide 135–138 3-Queue MLFQ (Q0=8, Q1=16, Q2=FCFS)</option>
+            <option value="srtf_s117">Preset: Slide 117–119 Preemptive SRTF</option>
+            <option value="sjf_s114">Preset: Slide 114–115 Non-Preemptive SJF</option>
+            <option value="prio_s109">Preset: Slide 109–110 Non-Preemptive Priority</option>
+            <option value="fcfs_s108">Preset: Slide 108 FCFS Convoy Effect</option>
+          </select>
+          <select id="sim-algo-select" class="select-input">
+            <option value="RR">Algorithm: Round Robin (RR)</option>
+            <option value="MLFQ4">Algorithm: 4-Level MLFQ (1, 2, 4, FCFS)</option>
+            <option value="MLFQ3">Algorithm: 3-Level MLFQ (8, 16, FCFS)</option>
+            <option value="SRTF">Algorithm: Preemptive SJF (SRTF)</option>
+            <option value="SJF">Algorithm: Non-Preemptive SJF</option>
+            <option value="PRIO_NP">Algorithm: Non-Preemptive Priority (Lower # = Higher)</option>
+            <option value="PRIO_P">Algorithm: Preemptive Priority (Lower # = Higher)</option>
+            <option value="FCFS">Algorithm: First-Come, First-Served (FCFS)</option>
+          </select>
+          <label style="font-size:0.82rem; display:flex; align-items:center; gap:0.35rem;">
+            Quantum $Q$:
+            <input type="number" id="sim-quantum-input" value="4" min="1" max="50" class="search-input" style="width:65px; padding:0.35rem 0.5rem;" />
+          </label>
+          <button class="btn btn-primary" id="sim-run-btn">⚡ Run Simulation</button>
+        </div>
+      </div>
+
+      <div class="sim-grid">
+        <div class="card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+            <h3 style="font-size:0.95rem;">Process Table Input</h3>
+            <div style="display:flex; gap:0.35rem;">
+              <button class="btn btn-sm" id="sim-add-proc-btn">+ Add Process</button>
+              <button class="btn btn-sm" id="sim-rem-proc-btn">− Remove</button>
+            </div>
+          </div>
+          <table class="sim-table" id="sim-input-table">
+            <thead>
+              <tr>
+                <th>PID</th>
+                <th>Arrival (AT)</th>
+                <th>Burst (BT)</th>
+                <th>Priority</th>
+              </tr>
+            </thead>
+            <tbody id="sim-input-tbody"></tbody>
+          </table>
+          <p style="font-size:0.75rem; color:var(--text-muted); margin-top:0.5rem;">
+            💡 Note: Priority uses Dr. Hosseini's convention where a <b>smaller integer = higher priority</b> (e.g., Priority 1 beats Priority 2). In Round Robin, new arrivals at time $t$ join the ready queue before a preempted process at time $t$.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3 style="font-size:0.95rem; margin-bottom:0.4rem;">Gantt Chart &amp; Step-by-Step Metrics</h3>
+          <div id="sim-gantt-container" class="gantt-track"></div>
+          <div id="sim-metrics-container"></div>
+          <div id="sim-trace-log" class="explanation-box" style="margin-top:0.85rem;"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         TAB 4: SPEAKER NOTES VAULT & HIGH-YIELD STUDY GUIDE
+         =================================================================== -->
+    <section id="tab-vault" class="tab-panel no-print">
+      <div class="toolbar-card">
+        <div>
+          <h2 style="font-size:1.1rem; margin-bottom:0.2rem;">"Under-the-Slides" Speaker Notes Vault &amp; Exam 1 Traps</h2>
+          <p style="font-size:0.82rem; color:var(--text-muted);">
+            Dr. Hosseini specifically warned: <i>"You are responsible for studying all content on the slides as well as the notes provided under the slides, since the notes contain additional explanations and details related to the material."</i> Every hidden speaker-note detail is indexed below.
+          </p>
+        </div>
+        <div>
+          <input type="text" id="vault-search-input" class="search-input" placeholder="Search speaker notes &amp; concepts..." style="width:280px;" />
+        </div>
+      </div>
+
+      <div class="vault-grid" id="vault-grid-container"></div>
+    </section>
+
+    <!-- ===================================================================
+         TAB 5: ACTIVE-RECALL FLASHCARDS
+         =================================================================== -->
+    <section id="tab-flashcards" class="tab-panel no-print">
+      <div class="toolbar-card">
+        <div>
+          <h2 style="font-size:1.1rem; margin-bottom:0.2rem;">Active-Recall Flashcards (46 High-Yield Cards with Slide Citations)</h2>
+          <p style="font-size:0.82rem; color:var(--text-muted);">
+            Click the card (or press Spacebar) to flip between Question and Answer. Use Left/Right arrows or buttons to navigate.
+          </p>
+        </div>
+        <div style="display:flex; gap:0.5rem; align-items:center;">
+          <select id="fc-chapter-filter" class="select-input">
+            <option value="ALL">All Chapters (46 Cards)</option>
+            <option value="Ch 1">Chapter 1 Only</option>
+            <option value="Ch 2">Chapter 2 Only</option>
+            <option value="Ch 3">Chapter 3 Only</option>
+          </select>
+          <button class="btn btn-sm" id="fc-shuffle-btn">🔀 Shuffle Deck</button>
+        </div>
+      </div>
+
+      <div class="flashcard-stage">
+        <div class="flashcard-box" id="flashcard-box">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span class="pill pill-sky" id="fc-badge-ch">Ch 1</span>
+            <span style="font-size:0.78rem; color:var(--text-muted); font-family:var(--font-mono);" id="fc-progress">Card 1 / 46</span>
+            <span class="pill pill-amber" id="fc-badge-side">QUESTION (Click to Flip)</span>
+          </div>
+          <div class="flashcard-content" id="fc-text"></div>
+          <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--border-subtle); padding-top:0.85rem;">
+            <button class="btn btn-sm" id="fc-prev-btn">⬅️ Previous</button>
+            <button class="btn btn-primary btn-sm" id="fc-flip-btn">🔄 Flip Card</button>
+            <button class="btn btn-sm" id="fc-next-btn">Next ➡️</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         TAB 6: ALL 331 SLIDES + SPEAKER NOTES + EMBEDDED DIAGRAMS BROWSER
+         =================================================================== -->
+    <section id="tab-slides" class="tab-panel no-print">
+      <div class="toolbar-card">
+        <div>
+          <h2 style="font-size:1.1rem; margin-bottom:0.2rem;">Complete Slide &amp; Speaker Notes Explorer (All 331 Slides + 278 Notes + 57 Diagrams)</h2>
+          <p style="font-size:0.82rem; color:var(--text-muted);">
+            Every single slide, speaker note, table, and embedded exercise solution image extracted directly from your 3 most recent PowerPoint files.
+          </p>
+        </div>
+        <div style="display:flex; flex-wrap:wrap; gap:0.5rem; align-items:center;">
+          <select id="slides-chapter-select" class="select-input">
+            <option value="ch1">Chapter 1 (66 Slides)</option>
+            <option value="ch2">Chapter 2 (151 Slides)</option>
+            <option value="ch3">Chapter 3 (114 Slides — Cutoff at Slide 21)</option>
+            <option value="all">All 331 Slides Combined</option>
+          </select>
+          <select id="slides-filter-select" class="select-input">
+            <option value="all">Show: All Slides</option>
+            <option value="notes">Show: Only Slides with Speaker Notes</option>
+            <option value="media">Show: Only Slides with Exercise Diagrams/Media</option>
+            <option value="exam1_ch3">Show: Ch 3 Exam 1 Cutoff Scope (Slides 1–21)</option>
+          </select>
+          <input type="text" id="slides-search-input" class="search-input" placeholder="Search any word across slides &amp; notes..." style="width:260px;" />
+        </div>
+      </div>
+
+      <div id="slides-count-banner" style="margin-bottom:0.85rem; font-size:0.84rem; color:var(--text-muted);"></div>
+      <div class="slides-grid" id="slides-browser-container"></div>
+    </section>
+  </main>
+
+  <script src="data/slides_data.js"></script>
+  <script src="data/exams_data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

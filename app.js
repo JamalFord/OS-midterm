@@ -107,12 +107,59 @@
   let examMode = 'study'; // 'study' | 'timed'
   let isExamGraded = false;
   const userAnswers = {}; // key: question.id -> value
+  const optionOrderMap = {}; // key: question.id -> array of original option indices
+  const questionOrderMap = {}; // key: exam.id -> array of original question indices
+
+  function shuffleArray(arr) {
+    const copy = arr.slice();
+    for (let i = copy.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const tmp = copy[i];
+      copy[i] = copy[j];
+      copy[j] = tmp;
+    }
+    return copy;
+  }
+
+  function shuffleExamAnswers(exam) {
+    if (!exam) return;
+    exam.questions.forEach((q) => {
+      if (q.type === 'mc' && Array.isArray(q.options)) {
+        const baseIndices = q.options.map((_, i) => i);
+        optionOrderMap[q.id] = shuffleArray(baseIndices);
+      }
+    });
+  }
+
+  function shuffleExamQuestionsAndAnswers(exam) {
+    if (!exam) return;
+    const qIndices = exam.questions.map((_, i) => i);
+    questionOrderMap[exam.id] = shuffleArray(qIndices);
+    shuffleExamAnswers(exam);
+  }
+
+  function resetExamOrder(exam) {
+    if (!exam) return;
+    questionOrderMap[exam.id] = exam.questions.map((_, i) => i);
+    exam.questions.forEach((q) => {
+      if (q.type === 'mc' && Array.isArray(q.options)) {
+        optionOrderMap[q.id] = q.options.map((_, i) => i);
+      }
+    });
+  }
+
+  // Initialize all exams with shuffled MC answer choices by default so correct answers aren't predictable
+  examsData.forEach((ex) => {
+    questionOrderMap[ex.id] = ex.questions.map((_, i) => i);
+    shuffleExamAnswers(ex);
+  });
 
   const examSelectorList = document.getElementById('exam-selector-list');
   const examQuestionsContainer = document.getElementById('exam-questions-container');
   const examScoreSummary = document.getElementById('exam-score-summary');
   const examModeSelect = document.getElementById('exam-mode-select');
   const gradeExamBtn = document.getElementById('grade-exam-btn');
+  const shuffleAnswersToolbarBtn = document.getElementById('shuffle-answers-toolbar-btn');
 
   // Timer state
   let timerSeconds = 75 * 60;
@@ -160,6 +207,14 @@
       timerSeconds = ((ex && ex.timeMinutes) || 75) * 60;
       timerDisplay.textContent = formatTime(timerSeconds);
       timerStartBtn.textContent = '▶️ Start Timer';
+    });
+  }
+
+  if (shuffleAnswersToolbarBtn) {
+    shuffleAnswersToolbarBtn.addEventListener('click', () => {
+      const exam = examsData[currentExamIndex];
+      shuffleExamAnswers(exam);
+      renderCurrentExam();
     });
   }
 
@@ -254,13 +309,16 @@
     headerCard.className = 'card';
     headerCard.style.marginBottom = '1rem';
     headerCard.innerHTML = `
-      <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:0.5rem;">
+      <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:0.75rem;">
         <div>
           <span class="pill pill-amber" style="margin-bottom:0.35rem;">${exam.badge}</span>
           <h3 style="font-size:1.15rem;">${exam.title}</h3>
           <p style="font-size:0.84rem; color:var(--text-muted);">${exam.subtitle}</p>
         </div>
-        <div style="display:flex; gap:0.5rem;">
+        <div style="display:flex; flex-wrap:wrap; gap:0.45rem;">
+          <button class="btn btn-sm btn-amber" id="shuffle-answers-card-btn">🔀 Shuffle Answer Choices</button>
+          <button class="btn btn-sm" id="shuffle-both-card-btn">🎲 Shuffle Questions &amp; Answers</button>
+          <button class="btn btn-sm" id="reset-order-card-btn">↺ Default Order</button>
           <button class="btn btn-sm" id="reveal-all-explanations-btn">👁️ Show All Answers &amp; Rubrics</button>
           <button class="btn btn-sm" id="clear-exam-answers-btn">🗑️ Clear My Answers</button>
         </div>
@@ -268,6 +326,18 @@
     `;
     examQuestionsContainer.appendChild(headerCard);
 
+    headerCard.querySelector('#shuffle-answers-card-btn').addEventListener('click', () => {
+      shuffleExamAnswers(exam);
+      renderCurrentExam();
+    });
+    headerCard.querySelector('#shuffle-both-card-btn').addEventListener('click', () => {
+      shuffleExamQuestionsAndAnswers(exam);
+      renderCurrentExam();
+    });
+    headerCard.querySelector('#reset-order-card-btn').addEventListener('click', () => {
+      resetExamOrder(exam);
+      renderCurrentExam();
+    });
     headerCard.querySelector('#reveal-all-explanations-btn').addEventListener('click', () => {
       isExamGraded = true;
       renderCurrentExam();
@@ -278,25 +348,37 @@
       renderCurrentExam();
     });
 
-    exam.questions.forEach((q, qIdx) => {
+    const qOrder = questionOrderMap[exam.id] || exam.questions.map((_, i) => i);
+
+    qOrder.forEach((origQIdx, displayIdx) => {
+      const q = exam.questions[origQIdx];
       const card = document.createElement('div');
       card.className = 'question-card';
       const showFeedback = isExamGraded || (examMode === 'study' && userAnswers[q.id] !== undefined && userAnswers[q.id]._revealed);
 
       let inputHtml = '';
+      let correctLetterTag = '';
+
       if (q.type === 'mc') {
-        const selectedIdx = userAnswers[q.id];
-        const showMcResult = isExamGraded || (examMode === 'study' && selectedIdx !== undefined);
-        inputHtml = `<div class="mc-options">` + q.options.map((opt, oIdx) => {
+        const selectedOrigIdx = userAnswers[q.id];
+        const showMcResult = isExamGraded || (examMode === 'study' && selectedOrigIdx !== undefined);
+        const optOrder = optionOrderMap[q.id] || q.options.map((_, i) => i);
+        const correctDispPos = optOrder.indexOf(q.correct);
+        if (correctDispPos !== -1) {
+          correctLetterTag = ` (Correct Choice: ${String.fromCharCode(65 + correctDispPos)})`;
+        }
+
+        inputHtml = `<div class="mc-options">` + optOrder.map((origOptIdx, dispIdx) => {
+          const opt = q.options[origOptIdx];
           let cls = 'mc-option';
-          if (selectedIdx === oIdx) cls += ' selected';
+          if (selectedOrigIdx === origOptIdx) cls += ' selected';
           if (showMcResult) {
-            if (oIdx === q.correct) cls += ' correct';
-            else if (selectedIdx === oIdx && selectedIdx !== q.correct) cls += ' incorrect';
+            if (origOptIdx === q.correct) cls += ' correct';
+            else if (selectedOrigIdx === origOptIdx && selectedOrigIdx !== q.correct) cls += ' incorrect';
           }
-          const letter = String.fromCharCode(65 + oIdx);
+          const letter = String.fromCharCode(65 + dispIdx);
           return `
-            <div class="${cls}" data-q="${q.id}" data-opt="${oIdx}">
+            <div class="${cls}" data-q="${q.id}" data-opt="${origOptIdx}">
               <span style="font-weight:800; font-family:var(--font-mono); min-width:22px;">(${letter})</span>
               <div>${formatRichText(opt)}</div>
             </div>
@@ -385,7 +467,7 @@
       const explanationHtml = shouldShowExplanation
         ? `<div class="explanation-box">
              <div style="font-weight:700; color:var(--accent-primary); margin-bottom:0.25rem;">
-               📖 Official Slide &amp; Speaker Note Explanation (${q.slideRef}):
+               📖 Official Slide &amp; Speaker Note Explanation (${q.slideRef})${correctLetterTag}:
              </div>
              ${formatRichText(q.explanation || q.sampleAnswer || '')}
            </div>`
@@ -394,7 +476,7 @@
       card.innerHTML = `
         <div class="question-header">
           <div style="display:flex; align-items:center; gap:0.5rem;">
-            <span class="pill pill-sky">Q${qIdx + 1} • ${q.points} pts</span>
+            <span class="pill pill-sky">Q${displayIdx + 1} • ${q.points} pts</span>
             <span class="pill pill-purple">${q.chapter}</span>
             <span style="font-size:0.78rem; color:var(--text-muted); font-weight:600;">${q.part}</span>
           </div>
